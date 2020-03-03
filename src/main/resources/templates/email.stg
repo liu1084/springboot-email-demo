@@ -1,0 +1,9 @@
+recoveryEmail(url, validHours, currentYear) ::= <<
+		尊敬的客户：
+		为了保证您的账户安全, 请复制以下链接到浏览器中重置口令。
+		($url$)
+		请注意：此链接将在自发送之时起 $validHours$ 小时后过期。
+
+		XXX 团队
+		Copyright $currentYear$ XXX ltd. All rights reserved.
+>>
