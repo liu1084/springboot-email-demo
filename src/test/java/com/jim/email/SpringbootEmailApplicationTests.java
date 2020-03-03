@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
@@ -35,6 +36,10 @@ class SpringbootEmailApplicationTests {
 
 	@Test
 	public void testSendSimpleMail() throws IOException {
+		mailService.sendSimpleMail(setSimpleMail());
+	}
+
+	private SimpleMailMessage setSimpleMail() throws IOException {
 		String [] to = {"liu1084@163.com"};
 		String [] bcc = {"liu1084@gmail.com"};
 		String from = "proaim@163.com";
@@ -50,7 +55,7 @@ class SpringbootEmailApplicationTests {
 		simpleMailMessage.setSubject(subject);
 		simpleMailMessage.setText(body);
 		simpleMailMessage.setSentDate(new Date());
-		mailService.sendSimpleMail(simpleMailMessage);
+		return simpleMailMessage;
 	}
 
 	private String generateMailBody() throws IOException {
@@ -70,24 +75,9 @@ class SpringbootEmailApplicationTests {
 
 	@Test
 	public void testAttachmentMail() throws IOException, MessagingException {
-		String [] to = {"liu1084@163.com"};
-		String [] bcc = {"liu1084@gmail.com"};
-		String from = "proaim@163.com";
-		String replyTo = "admin@proaimltd.com.cn";
-		String subject = "密码找回测试邮件";
-		String body = generateMailBody();
+		SimpleMailMessage simpleMailMessage = setSimpleMail();
+		FileSystemResource fileSystemResource = new FileSystemResource(new File("C:\\Users\\Administrator\\Desktop\\维修记录.xls"));
 
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setTo(to);
-		simpleMailMessage.setBcc(bcc);
-		simpleMailMessage.setReplyTo(replyTo);
-		simpleMailMessage.setFrom(from);
-		simpleMailMessage.setSubject(subject);
-		simpleMailMessage.setText(body);
-		simpleMailMessage.setSentDate(new Date());
-
-		List<File> attachments = new ArrayList<>();
-		attachments.add(new File("E:\\github\\springboot-email-demo\\src\\main\\resources\\templates\\email.stg"));
-		mailService.sendMailWithAttachments(simpleMailMessage,attachments);
+		mailService.sendMailWithAttachments(simpleMailMessage,fileSystemResource);
 	}
 }

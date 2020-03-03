@@ -1,6 +1,7 @@
 package com.jim.email.service;
 
 import com.jim.email.entity.SimpleMessage;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 
 import javax.mail.MessagingException;
@@ -16,5 +17,5 @@ import java.util.List;
  */
 public interface IMailService {
 	void sendSimpleMail(SimpleMailMessage simpleMessage);
-	void sendMailWithAttachments(SimpleMailMessage simpleMailMessage, List<File> files) throws MessagingException;
+	void sendMailWithAttachments(SimpleMailMessage simpleMailMessage, FileSystemResource fileSystemResource) throws MessagingException;
 }

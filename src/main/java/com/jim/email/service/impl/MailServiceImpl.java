@@ -36,7 +36,7 @@ public class MailServiceImpl implements IMailService {
 	}
 
 	@Override
-	public void sendMailWithAttachments(@NotNull SimpleMailMessage simpleMailMessage, @NotNull List<File> files) {
+	public void sendMailWithAttachments(@NotNull SimpleMailMessage simpleMailMessage, @NotNull FileSystemResource fileSystemResource) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -45,13 +45,7 @@ public class MailServiceImpl implements IMailService {
 			helper.setFrom(simpleMailMessage.getFrom());
 			helper.setText(simpleMailMessage.getText());
 			helper.setReplyTo(simpleMailMessage.getReplyTo());
-			files.forEach((file) -> {
-				try {
-					helper.addAttachment("", file);
-				} catch (MessagingException e) {
-					e.printStackTrace();
-				}
-			});
+			helper.addAttachment("Invoice", fileSystemResource);
 			mailSender.send(mimeMessage);
 		}catch (MessagingException e) {
 			e.printStackTrace();
