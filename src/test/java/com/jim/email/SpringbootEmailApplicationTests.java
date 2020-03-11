@@ -16,6 +16,7 @@ import org.stringtemplate.v4.STGroupFile;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -76,8 +77,11 @@ class SpringbootEmailApplicationTests {
 	@Test
 	public void testAttachmentMail() throws IOException, MessagingException {
 		SimpleMailMessage simpleMailMessage = setSimpleMail();
-		FileSystemResource fileSystemResource = new FileSystemResource(new File("C:\\Users\\Administrator\\Desktop\\维修记录.xls"));
-
+		File attachment = new File("C:\\Users\\Administrator\\Desktop\\active-win10-ltsc.bat");
+		if (!attachment.isFile() || !attachment.exists()) {
+			throw new FileNotFoundException();
+		}
+		FileSystemResource fileSystemResource = new FileSystemResource(attachment);
 		mailService.sendMailWithAttachments(simpleMailMessage,fileSystemResource);
 	}
 }

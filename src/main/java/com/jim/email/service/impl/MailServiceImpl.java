@@ -1,12 +1,8 @@
 package com.jim.email.service.impl;
 
-import com.jim.email.entity.SimpleMessage;
 import com.jim.email.service.IMailService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.lang.Nullable;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,8 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.constraints.NotNull;
-import java.io.File;
-import java.util.List;
 
 /**
  * @project: springboot-email-demo
